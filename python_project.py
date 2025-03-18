@@ -19,7 +19,7 @@ def display_table(list_dict:list):
     ]
     
     print(display_table(products))
-    """ 
+    """
 
     #using PrettyTable module to display the products
     table = PrettyTable()
@@ -60,18 +60,17 @@ def calculte_discount(qty:int):
     >>> calculate_discount(2000)
     0.0
     """
-    if qty >= 250 and qty < 500:
+    if 250 <= qty < 500:
         return 0.05 # discount 5%
-    elif qty >= 500 and qty < 750:
+    if 500 <= qty < 750:
         return 0.1 # discount 10%
-    elif qty >= 750 and qty < 1000:
+    if 750 <= qty < 1000:
         return 0.15 # discount 15%
-    elif qty >= 1000 and qty < 1250:
+    if 1000 <= qty < 1250:
         return 0.2 # discount 20%
-    elif qty >= 1250 and qty < 1500:
+    if 1250 <= qty < 1500:
         return 0.25 # discount 25%
-    else:
-        return 0 # discount 0%
+    return 0 # discount 0%
 
 
 #defining the bill function
@@ -122,8 +121,10 @@ products = [
     {"Name": "Hard Drive", "Price": 120,   "QTY": 200},
 ]
 
-#creating empty lists to handle the purchased products name, price, and quantity        
-name_list = list(); price_list = list(); qty_list = list()
+#creating empty lists to handle the purchased products name, price, and quantity
+name_list = []
+price_list = []
+qty_list = []
 
 
 #difine function to validate product name and quantity
@@ -154,25 +155,25 @@ def valid_product_name_qty(name:str,product,disc_fucn,bill_func):
     >>> valid_product_name_qty("Laptop", products, calculate_discount, bill)
     
     """
-  
     while True:
-        if name == 'Q': #Quiting the loop 
-
+        if name == 'Q': #Quiting the loop
             break
         else: # validating the product and its quantity
-            for i in product: 
+            for i in product:
                 if name == i['Name'] : #validating the product name
                     print(f"\nYou Chose => [ {name} ]\n") #display the chosen product
                     #extracting the product price
                     price = i["Price"]
                     #asking the user to input the product required quantity
                     qty = input("Please Enter the Required Quantity = ")
-                    while True: 
+                    while True:
                         try: # to handle the ValueError of quantity
                             qty_int = int(qty)
                             if i["QTY"] >= qty_int and qty_int >0: # validating the product quantity
                                 #display the product name and its quantity
-                                print(f"\nYou Chose => [ {name} ], With Quantity => [ {qty_int} ]\n ")
+                                print(
+                                       f"\nYou Chose => [ {name} ], "
+                                       f"With Quantity => [ {qty_int} ]\n")
                                 # deduct the purchased quantity from the available quantity
                                 i["QTY"] -=  qty_int
                                 #fill the name, price, quantity lists
@@ -183,17 +184,17 @@ def valid_product_name_qty(name:str,product,disc_fucn,bill_func):
                                 discount = disc_fucn(sum(qty_list))
                                 bill_func(price_list,qty_list,discount)
                                 #output the purchased product name, price and quantity
-                                return name,price,qty_int 
+                                return name,price,qty_int
                                 break
-                            
                             else: # informing the user to input valid product quantity
-                                print(f"\n⚠️  The available Quantity for [{name}] => {i["QTY"]} ⚠️ \n")
+                                print(
+                                       "\n⚠️  The available Quantity for",
+                                       f"[{name}] => {i["QTY"]} ⚠️ \n")
                                 qty = input("Enter the Required Quantity:  ")
-                        except ValueError : # informing the user to input correct product quantity data type
-                            print(f"\n⚠️  Please Enter Number ⚠️ \n")
+                        except ValueError :
+                            print("\n⚠️  Please Enter Number ⚠️ \n")
                             qty = input("Enter the Required Quantity:  ")
-                  
-            # informing the user to input valid product    
+            # informing the user to input valid product
             print("\n⚠️  You entered invalid product ⚠️ \n")
             print("The available products are: ")
             prod_table = display_table(product)
@@ -225,7 +226,6 @@ def prompt(prod, disc_fucn ,bill_func):
     Example Usage:
     >>> prompt(products, calculate_discount, bill)
     """
- 
     while True:
         #prompt the user to enter the product name
         prod_table = display_table(prod)
@@ -233,12 +233,11 @@ def prompt(prod, disc_fucn ,bill_func):
         name  = input("Choose product, or press 'q' to quit  \n").strip().title()
         if name == 'Q': # check to quit the loop
             break
-        else:
-            func_out = valid_product_name_qty(name,prod,disc_fucn,bill_func)
-            if not func_out: # check is valid_product_name_qty() function is empty
-                break
+        func_out = valid_product_name_qty(name,prod,disc_fucn,bill_func)
+        if not func_out: # check is valid_product_name_qty() function is empty
+            break
 
-#calling the prompt function 
+#calling the prompt function
 print("Hello!, The available products are: ")
 prompt(products,calculte_discount,bill)
 #calcultaing final bill with discount
@@ -246,8 +245,6 @@ discount = calculte_discount(sum(qty_list))
 #Displaying the final product bill
 print("\nYour Bill:")
 final_product_price = bill(price_list,qty_list,discount)
-
-        
 
 #calculating the price with discount for stationary products
 #defining function for calculting the discount
@@ -281,8 +278,10 @@ def calculte_discount_st(qty:int):
     """
     return (qty//50)*0.02
 
-#creating empty lists to handle the purchased products name, price, and quantity        
-name_list = list(); price_list = list(); qty_list = list() 
+#creating empty lists to handle the purchased products name, price, and quantity
+name_list = []
+price_list = []
+qty_list = []
 # Stationary Stor Functionality
 def stationary_store():
     """
@@ -310,7 +309,6 @@ def stationary_store():
     Returns:
     - The final amount after applying the discount.
     """
-    
     # creating th list of products
     stationary_products = [
                             {"Name": "Notebook",   "Price": 2.5, "QTY": 100},
@@ -324,9 +322,9 @@ def stationary_store():
                             {"Name": "Scissors",   "Price": 3.0, "QTY": 50},
                             {"Name": "Stapler",    "Price": 4.5, "QTY": 200}
                            ]
-    
-    tabl = display_table(stationary_products)
-    #calling the prompt function 
+
+    display_table(stationary_products)
+    #calling the prompt function
     print("Hello!, The available Stationary products are: ")
     prompt(stationary_products,calculte_discount_st,bill)
     #calcultaing final bill with discount
@@ -340,10 +338,11 @@ final_product_st_price = stationary_store()
 #calulating the final price for products and stationary products
 final_price = final_product_price + final_product_st_price
 #dispalying the final price
-print(f"\nThe total Bill Amount of [devices & Stationary] Products after the Dsicount  = ${final_price}\n")
+print("\nThe total Bill Amount of [devices & Stationary] Products",
+      f"after the Dsicount  = ${final_price}\n")
 
 #definig function to ask the user to choose between "delivery" or "pick-up"
-#and calculating the price after the choice   
+#and calculating the price after the choice
 def delivery_or_pickup(price):
     """
     Determines whether the customer wants delivery or pick-up and adjusts the bill accordingly.
@@ -381,18 +380,18 @@ def delivery_or_pickup(price):
     if choice == "D":
         final_price_after_delivery_pickup = price + 200
         print("\nYou Chose Delivey Option, so $200 will be add to your bill")
-        print(f"The Bill Amount after Discount and Delivery = ${final_price_after_delivery_pickup}\n")
+        print("The Bill Amount after Discount and Delivery",
+              f"= ${final_price_after_delivery_pickup}\n")
         return final_price_after_delivery_pickup
-    elif choice == "P":
+    if choice == "P":
         final_price_after_delivery_pickup = price + 50
         print("\nYou Chose Pick-UP Option, so $50 will be add to your bill")
         print(f"The Bill Amount after Dicount and Pick-Up = ${final_price_after_delivery_pickup}\n")
         return final_price_after_delivery_pickup
-    else:
-        print("\nYou Did not Choose either to Delivery or Pick-up")
-        print(f"The Bill Amount after Discount = ${price}\n")
-        return price
-    
+    print("\nYou Did not Choose either to Delivery or Pick-up")
+    print(f"The Bill Amount after Discount = ${price}\n")
+    return price
+
 #calulating price after Delivery of pick-up for products and stationary products
 final_price_after_delivery_pickup = delivery_or_pickup(final_price)
 
@@ -438,23 +437,13 @@ def currency_conversion(price):
         print(f"\nThe Total Bill Amount in EUR = {p:,.2f}\nYour order is on the way")
 
         return p
-    elif currency == "EGP":
+    if currency == "EGP":
         p = price * 30
         print(f"\nThe Total Bill Amount in EGP = {p:,.2f}\nYour order is on the way")
         return p
-    else:
-        print(f"\nThe Total Bill Amount in USD = {price:,.2f}\nYour order is on the way")
-        return price
-    
+
+    print(f"\nThe Total Bill Amount in USD = {price:,.2f}\nYour order is on the way")
+    return price
+
 #calcutating price after currency conversion
 price_after_currency_conversion = currency_conversion(final_price_after_delivery_pickup)
-
-
-
-
-
-
-
-
-
-
